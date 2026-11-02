@@ -1,0 +1,42 @@
+# Docker mode. Start with:  docker compose up -d --build
+# The autoscaler then changes the replica count of `app`:
+#   python autoscaler/autoscaler.py --backend docker --mode reactive
+services:
+  redis:
+    image: redis:7-alpine
+
+  app:
+    build: .
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CONCURRENCY: "2"
+      SERVICE_MS: "250"
+      START_DELAY_S: "3"
+    depends_on: [redis]
+    deploy:
+      replicas: 2
+    stop_grace_period: 10s
+
+  worker:
+    build: .
+    command: ["python", "-m", "app.worker"]
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
+    deploy:
+      replicas: 2
+
+  lb:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./lb/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:8080"
+    depends_on: [app]
+
+  redis-exposed:   # lets the host-side autoscaler read heartbeats
+    image: alpine/socat
+    command: TCP-LISTEN:6379,fork,reuseaddr TCP:redis:6379
+    ports:
+      - "6379:6379"
+    depends_on: [redis]
