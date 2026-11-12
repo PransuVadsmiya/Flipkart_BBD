@@ -1,0 +1,19 @@
+{
+  "run": "docker-reactive",
+  "requests": 16493,
+  "failure_rate_pct": 0.8,
+  "overall_p50_ms": 48.0,
+  "overall_p95_ms": 1000.0,
+  "overall_p99_ms": 1600.0,
+  "peak_p50_ms": 31.5,
+  "peak_p95_ms": 450.0,
+  "peak_p95_worst_ms": 1700.0,
+  "peak_rps": 204.5,
+  "max_instances": 20,
+  "avg_instances": 9.27,
+  "instance_seconds": 1697,
+  "cost_usd": 0.009805,
+  "orders_processed": 777,
+  "orders_left_in_queue": 0,
+  "order_p95_s": null
+}

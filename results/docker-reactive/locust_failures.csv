@@ -1,0 +1,8 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/api/products,LocustBadStatusCode(code=502),7,2026-11-14T05:55:52Z,2026-11-14T05:55:53Z
+GET,/api/search,LocustBadStatusCode(code=502),3,2026-11-14T05:55:52Z,2026-11-14T05:55:53Z
+GET,/api/search,LocustBadStatusCode(code=503),29,2026-11-14T05:55:38Z,2026-11-14T05:55:52Z
+POST,/api/cart,LocustBadStatusCode(code=503),8,2026-11-14T05:55:38Z,2026-11-14T05:55:45Z
+POST,/api/checkout,LocustBadStatusCode(code=503),8,2026-11-14T05:55:38Z,2026-11-14T05:55:52Z
+POST,/api/cart,LocustBadStatusCode(code=502),4,2026-11-14T05:55:52Z,2026-11-14T05:55:53Z
+GET,/api/products,LocustBadStatusCode(code=503),73,2026-11-14T05:55:38Z,2026-11-14T05:55:52Z

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: bbd
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: worker}
+  template:
+    metadata:
+      labels: {app: worker}
+    spec:
+      containers:
+        - name: worker
+          image: bbd-app:latest
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-m", "app.worker"]
+          env:
+            - {name: REDIS_URL, value: "redis://redis:6379/0"}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
