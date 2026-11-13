@@ -1,0 +1,14 @@
+#!/bin/bash
+# Runs once at instance boot (EC2 user data). Log: /var/log/user-data.log
+exec > /var/log/user-data.log 2>&1
+set -x
+dnf install -y docker
+systemctl enable --now docker
+mkdir -p /opt/app/app
+echo '${app_gz_b64}' | base64 -d | gunzip > /opt/app/app/main.py
+# WORK_MODE=cpu: each request burns real CPU, so CPU utilisation tracks load and the 50% rule can trigger.
+docker run -d --name web --restart always -p 80:8000 \
+  -v /opt/app:/srv -w /srv \
+  -e REDIS_URL=memory -e WORK_MODE=cpu -e CONCURRENCY=8 \
+  -e SERVICE_MS=150 -e HIT_MS=2 -e CHECKOUT_MS=10 -e MAX_INFLIGHT=400 \
+  python:3.12-slim sh -c "pip install --no-cache-dir -q fastapi 'uvicorn[standard]' redis && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --no-access-log"
