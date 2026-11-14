@@ -1,0 +1,36 @@
+{
+  "run": "aws-run2",
+  "requests": 83649,
+  "failure_rate_pct": 0.0,
+  "overall_p50_ms": 37.0,
+  "overall_p95_ms": 660.0,
+  "overall_p99_ms": 1200.0,
+  "peak_p50_ms": 30.0,
+  "peak_p95_ms": 320.0,
+  "peak_p95_worst_ms": 5200.0,
+  "peak_rps": 84.7,
+  "max_instances": 4,
+  "avg_instances": 3.35,
+  "instance_seconds": 7634,
+  "cost_usd": 0.047504,
+  "orders_processed": 0,
+  "orders_left_in_queue": 0,
+  "order_p95_s": null,
+  "peak_by_instances": {
+    "2": {
+      "seconds": 288,
+      "p50_ms": 180.0,
+      "p95_ms": 960.0
+    },
+    "3": {
+      "seconds": 10,
+      "p50_ms": 155.0,
+      "p95_ms": 905.0
+    },
+    "4": {
+      "seconds": 332,
+      "p50_ms": 26.0,
+      "p95_ms": 240.0
+    }
+  }
+}
