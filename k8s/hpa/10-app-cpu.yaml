@@ -1,0 +1,57 @@
+# Storefront for the HPA experiment: same settings as the AWS instances (real CPU burn, in-memory store),
+# so CPU utilisation tracks load and a CPU-based autoscaler can work. Replaces the `app` Deployment and
+# Service from k8s/20-app.yaml (same names). `replicas` is omitted on purpose: the HPA owns the replica count.
+# One pod = 1 vCPU (request = limit), i.e. half of a t3.small; the load in the HPA runs is half of the AWS load.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: bbd
+spec:
+  selector:
+    matchLabels: {app: app}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxSurge: 50%, maxUnavailable: 0}
+  template:
+    metadata:
+      labels: {app: app}
+    spec:
+      terminationGracePeriodSeconds: 20
+      containers:
+        - name: app
+          image: bbd-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - {name: REDIS_URL, value: "memory"}
+            - {name: WORK_MODE, value: "cpu"}
+            - {name: CONCURRENCY, value: "8"}
+            - {name: SERVICE_MS, value: "150"}
+            - {name: HIT_MS, value: "2"}
+            - {name: CHECKOUT_MS, value: "10"}
+            - {name: MAX_INFLIGHT, value: "400"}
+          readinessProbe:
+            httpGet: {path: /health, port: 8000}
+            periodSeconds: 1
+            failureThreshold: 2
+          lifecycle:
+            preStop:
+              exec: {command: ["sleep", "3"]}
+          resources:
+            requests: {cpu: "1000m", memory: 128Mi}
+            limits: {cpu: "1000m", memory: 256Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  namespace: bbd
+spec:
+  type: NodePort
+  selector: {app: app}
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30080

@@ -1,0 +1,33 @@
+# Horizontal Pod Autoscaler: the Kubernetes counterpart of the AWS rule `bbd-cpu-target-50`.
+# Target: average CPU = 50% of the pods' CPU request. Min 2 (as AWS run 2). Max 6 pods.
+# Behaviour values are the Kubernetes defaults, written out so the report can quote them:
+#   scale out: no stabilisation, up to double the pods (or 4) every 15 s
+#   scale in:  the highest recommendation of the last 300 s is used, then up to 100% per 15 s
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: app
+  namespace: bbd
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: app
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: {type: Utilization, averageUtilization: 50}
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - {type: Percent, value: 100, periodSeconds: 15}
+        - {type: Pods, value: 4, periodSeconds: 15}
+      selectPolicy: Max
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - {type: Percent, value: 100, periodSeconds: 15}
