@@ -1,0 +1,37 @@
+[2026-11-14 06:05:35,843] vm/INFO/locust.main: Starting Locust 2.47.0
+[2026-11-14 06:05:35,844] vm/INFO/locust.runners: Shape test starting.
+[2026-11-14 06:05:35,844] vm/INFO/locust.runners: Shape worker starting
+[2026-11-14 06:05:35,844] vm/INFO/locust.runners: Shape test updating to 150 users at 8.00 spawn rate
+[2026-11-14 06:05:35,844] vm/INFO/locust.runners: Ramping to 150 users at a rate of 8.00 per second
+[2026-11-14 06:05:45,885] vm/INFO/locust.runners: Shape test updating to 150 users at 50.00 spawn rate
+[2026-11-14 06:05:45,889] vm/INFO/locust.runners: Ramping to 150 users at a rate of 50.00 per second
+[2026-11-14 06:05:46,891] vm/INFO/locust.runners: All users spawned: {"Shopper": 150} (150 total users)
+[2026-11-14 06:06:46,053] vm/INFO/locust.runners: Shape test stopping
+[2026-11-14 06:06:46,076] vm/INFO/locust.main: Shape test completed, shutting down
+[2026-11-14 06:06:46,076] vm/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+POST     /api/cart                                                                       1007     0(0.00%) |    179       9     979     71 |   14.34        0.00
+POST     /api/checkout                                                                    481     0(0.00%) |    208      25     855    220 |    6.85        0.00
+GET      /api/products                                                                   5648     2(0.04%) |    192       1    1268    200 |   80.43        0.03
+GET      /api/search                                                                     2328     1(0.04%) |    401       9    1173    310 |   33.15        0.01
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                      9464     3(0.03%) |    243       1    1268    240 |  134.77        0.04
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+POST     /api/cart                                                                              71    250    270    290    480    510    660    750    980    980    980   1007
+POST     /api/checkout                                                                         220    270    300    310    510    560    600    730    860    860    860    481
+GET      /api/products                                                                         200    250    280    300    490    530    700    770   1000   1300   1300   5648
+GET      /api/search                                                                           310    480    510    520    670    750    820    950   1000   1200   1200   2328
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                            240    280    320    460    520    600    760    800   1000   1300   1300   9464
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+2                  GET /api/products: LocustBadStatusCode(code=502)                                                    
+1                  GET /api/search: LocustBadStatusCode(code=502)                                                      
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

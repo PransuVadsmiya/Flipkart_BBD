@@ -1,0 +1,12 @@
+572:C 14 Nov 2026 06:08:13.682 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+572:C 14 Nov 2026 06:08:13.682 # Redis version=7.0.15, bits=64, commit=00000000, modified=0, pid=572, just started
+572:C 14 Nov 2026 06:08:13.682 # Configuration loaded
+572:M 14 Nov 2026 06:08:13.682 * monotonic clock: POSIX clock_gettime
+572:M 14 Nov 2026 06:08:13.682 # Warning: Could not create server TCP listening socket ::*:6390: unable to bind socket, errno: 97
+572:M 14 Nov 2026 06:08:13.683 * Running mode=standalone, port=6390.
+572:M 14 Nov 2026 06:08:13.683 # Server initialized
+572:M 14 Nov 2026 06:08:13.683 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+572:M 14 Nov 2026 06:08:13.683 * Ready to accept connections
+572:signal-handler (1794636576) Received SIGTERM scheduling shutdown...
+572:M 14 Nov 2026 06:09:36.629 # User requested shutdown...
+572:M 14 Nov 2026 06:09:36.629 # Redis is now ready to exit, bye bye...
