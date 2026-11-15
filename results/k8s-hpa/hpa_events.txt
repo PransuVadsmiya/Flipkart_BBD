@@ -1,0 +1,84 @@
+Name:                                                  app
+Namespace:                                             bbd
+Labels:                                                <none>
+Annotations:                                           <none>
+CreationTimestamp:                                     Sun, 15 Nov 2026 22:26:19 +0530
+Reference:                                             Deployment/app
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  0% (3m) / 50%
+Min replicas:                                          2
+Max replicas:                                          6
+Behavior:
+  Scale Up:
+    Stabilization Window: 0 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 100  Period: 15 seconds
+      - Type: Pods     Value: 4    Period: 15 seconds
+  Scale Down:
+    Stabilization Window: 300 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 100  Period: 15 seconds
+Deployment pods:       2 current / 2 desired
+Conditions:
+  Type            Status  Reason               Message
+  ----            ------  ------               -------
+  AbleToScale     True    ScaleDownStabilized  recent recommendations were higher than current one, applying the highest recent recommendation
+  ScaledToZero    False   NotScaledToZero      the HPA controller did not scale the workload to zero
+  ScalingActive   True    ValidMetricFound     the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+  ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range
+Events:
+  Type     Reason                        Age    From                       Message
+  ----     ------                        ----   ----                       -------
+  Normal   SuccessfulRescale             23m    horizontal-pod-autoscaler  New size: 2; reason: Current number of replicas below Spec.MinReplicas
+  Warning  FailedGetResourceMetric       23m    horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+  Warning  FailedComputeMetricsReplicas  23m    horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+  Normal   SuccessfulRescale             17m    horizontal-pod-autoscaler  New size: 3; reason: cpu resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             16m    horizontal-pod-autoscaler  New size: 4; reason: cpu resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             6m20s  horizontal-pod-autoscaler  New size: 3; reason: All metrics below target
+  Normal   SuccessfulRescale             6m5s   horizontal-pod-autoscaler  New size: 2; reason: All metrics below target
+
+--- events ---
+LAST SEEN   TYPE      REASON                         OBJECT                        MESSAGE
+23m         Normal    ScalingReplicaSet              deployment/app                Scaled up replica set app-dc768f499 from 0 to 1
+23m         Normal    ScalingReplicaSet              deployment/app                Scaled up replica set app-dc768f499 from 1 to 2
+23m         Normal    Scheduled                      pod/app-dc768f499-7gc28       Successfully assigned bbd/app-dc768f499-7gc28 to bbd-control-plane
+23m         Normal    SuccessfulRescale              horizontalpodautoscaler/app   New size: 2; reason: Current number of replicas below Spec.MinReplicas
+23m         Normal    Scheduled                      pod/app-dc768f499-wz4cr       Successfully assigned bbd/app-dc768f499-wz4cr to bbd-control-plane
+23m         Normal    SuccessfulCreate               replicaset/app-dc768f499      Created pod: app-dc768f499-7gc28
+23m         Normal    SuccessfulCreate               replicaset/app-dc768f499      Created pod: app-dc768f499-wz4cr
+23m         Warning   Unhealthy                      pod/app-dc768f499-7gc28       Readiness probe failed: Get "http://10.244.0.8:8000/health": dial tcp 10.244.0.8:8000: connect: connection refused
+23m         Normal    Started                        pod/app-dc768f499-7gc28       Container started
+23m         Normal    Started                        pod/app-dc768f499-wz4cr       Container started
+23m         Normal    Created                        pod/app-dc768f499-7gc28       Container created
+23m         Normal    Created                        pod/app-dc768f499-wz4cr       Container created
+23m         Normal    Pulled                         pod/app-dc768f499-wz4cr       Container image "bbd-app:latest" already present on machine and can be accessed by the pod
+23m         Normal    Pulled                         pod/app-dc768f499-7gc28       Container image "bbd-app:latest" already present on machine and can be accessed by the pod
+23m         Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/app   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+23m         Warning   FailedGetResourceMetric        horizontalpodautoscaler/app   failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+17m         Normal    Pulled                         pod/app-dc768f499-lkbxg       Container image "bbd-app:latest" already present on machine and can be accessed by the pod
+17m         Normal    SuccessfulRescale              horizontalpodautoscaler/app   New size: 3; reason: cpu resource utilization (percentage of request) above target
+17m         Normal    ScalingReplicaSet              deployment/app                Scaled up replica set app-dc768f499 from 2 to 3
+17m         Warning   Unhealthy                      pod/app-dc768f499-lkbxg       Readiness probe failed: Get "http://10.244.0.9:8000/health": dial tcp 10.244.0.9:8000: connect: connection refused
+17m         Normal    Started                        pod/app-dc768f499-lkbxg       Container started
+17m         Normal    Created                        pod/app-dc768f499-lkbxg       Container created
+17m         Normal    SuccessfulCreate               replicaset/app-dc768f499      Created pod: app-dc768f499-lkbxg
+17m         Normal    Scheduled                      pod/app-dc768f499-lkbxg       Successfully assigned bbd/app-dc768f499-lkbxg to bbd-control-plane
+16m         Normal    Scheduled                      pod/app-dc768f499-qs5gr       Successfully assigned bbd/app-dc768f499-qs5gr to bbd-control-plane
+16m         Normal    SuccessfulCreate               replicaset/app-dc768f499      Created pod: app-dc768f499-qs5gr
+16m         Normal    ScalingReplicaSet              deployment/app                Scaled up replica set app-dc768f499 from 3 to 4
+16m         Normal    SuccessfulRescale              horizontalpodautoscaler/app   New size: 4; reason: cpu resource utilization (percentage of request) above target
+16m         Normal    Pulled                         pod/app-dc768f499-qs5gr       Container image "bbd-app:latest" already present on machine and can be accessed by the pod
+16m         Normal    Created                        pod/app-dc768f499-qs5gr       Container created
+16m         Normal    Started                        pod/app-dc768f499-qs5gr       Container started
+16m         Warning   Unhealthy                      pod/app-dc768f499-qs5gr       Readiness probe failed: Get "http://10.244.0.10:8000/health": dial tcp 10.244.0.10:8000: connect: connection refused
+6m20s       Normal    SuccessfulRescale              horizontalpodautoscaler/app   New size: 3; reason: All metrics below target
+6m20s       Normal    Killing                        pod/app-dc768f499-qs5gr       Stopping container app
+6m20s       Normal    SuccessfulDelete               replicaset/app-dc768f499      Deleted pod: app-dc768f499-qs5gr
+6m20s       Normal    ScalingReplicaSet              deployment/app                Scaled down replica set app-dc768f499 from 4 to 3
+6m5s        Normal    Killing                        pod/app-dc768f499-wz4cr       Stopping container app
+6m5s        Normal    SuccessfulDelete               replicaset/app-dc768f499      Deleted pod: app-dc768f499-wz4cr
+6m5s        Normal    SuccessfulRescale              horizontalpodautoscaler/app   New size: 2; reason: All metrics below target
+6m5s        Normal    ScalingReplicaSet              deployment/app                Scaled down replica set app-dc768f499 from 3 to 2
+6m2s        Warning   Unhealthy                      pod/app-dc768f499-wz4cr       Readiness probe failed: Get "http://10.244.0.7:8000/health": dial tcp 10.244.0.7:8000: connect: connection refused
