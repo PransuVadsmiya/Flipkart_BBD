@@ -1,0 +1,56 @@
+{
+  "run": "k8s-reactive",
+  "requests": 7900,
+  "failure_rate_pct": 24.899,
+  "overall_p50_ms": 280.0,
+  "overall_p95_ms": 2100.0,
+  "overall_p99_ms": 2800.0,
+  "peak_p50_ms": 360.0,
+  "peak_p95_ms": 2200.0,
+  "peak_p95_worst_ms": 2900.0,
+  "peak_rps": 161.0,
+  "max_instances": 20,
+  "avg_instances": 8.61,
+  "instance_seconds": 792,
+  "cost_usd": 0.004577,
+  "orders_processed": 317,
+  "orders_left_in_queue": 0,
+  "order_p95_s": null,
+  "peak_by_instances": {
+    "4": {
+      "seconds": 1,
+      "p50_ms": 1200.0,
+      "p95_ms": 2200.0
+    },
+    "5": {
+      "seconds": 1,
+      "p50_ms": 1300.0,
+      "p95_ms": 2200.0
+    },
+    "8": {
+      "seconds": 4,
+      "p50_ms": 1250.0,
+      "p95_ms": 2100.0
+    },
+    "10": {
+      "seconds": 1,
+      "p50_ms": 1100.0,
+      "p95_ms": 2100.0
+    },
+    "11": {
+      "seconds": 5,
+      "p50_ms": 490.0,
+      "p95_ms": 2300.0
+    },
+    "16": {
+      "seconds": 1,
+      "p50_ms": 230.0,
+      "p95_ms": 2500.0
+    },
+    "20": {
+      "seconds": 19,
+      "p50_ms": 450.0,
+      "p95_ms": 2000.0
+    }
+  }
+}
