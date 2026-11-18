@@ -30,6 +30,8 @@ The local, Docker and Kubernetes modes below are the experiment framework used t
 
 ## Layout
 
+For the complete architecture, component flows, deployment variants, scaling policies and trade-offs, see [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md).
+
 ```
 app/            FastAPI storefront (main.py) + order worker (worker.py)
 lb/             nginx.conf (Docker) and lb.py (dev-mode software LB)
