@@ -41,23 +41,29 @@ The implementation is a reference system for learning and load-testing. It is no
 ## 3. Logical architecture
 
 ```mermaid
-flowchart LR
-    U[Shoppers / Locust] --> LB[Software load balancer]
-    LB --> APP1[Storefront instance 1]
-    LB --> APP2[Storefront instance 2]
-    LB --> APPN[Storefront instance N]
+flowchart TD
+    USER[Shoppers / Load Generator] --> LB[Load Balancer<br/>Nginx / AWS ALB]
 
-    APP1 --> R[(Redis)]
-    APP2 --> R
-    APPN --> R
+    LB --> APP1[Storefront Instance 1]
+    LB --> APP2[Storefront Instance 2]
+    LB --> APPN[Storefront Instance N]
 
-    R --> W1[Order worker 1]
-    R --> W2[Order worker 2]
+    APP1 --> REDIS[(Redis)]
+    APP2 --> REDIS
+    APPN --> REDIS
 
-    AS[Autoscaler] -->|heartbeat metrics| R
-    AS -->|scale deployment| APP1
-    AS -->|scale deployment| APP2
-    AS -->|scale deployment| APPN
+    REDIS --> CACHE[Product Cache]
+    REDIS --> STOCK[Atomic Stock Counters]
+    REDIS --> HEARTBEAT[Instance Heartbeats]
+    REDIS --> QUEUE[Order Queue]
+
+    QUEUE --> W1[Order Worker 1]
+    QUEUE --> W2[Order Worker 2]
+
+    AS[Autoscaler] -->|Read Utilization / Queue| REDIS
+    AS -->|Scale Replicas / Instances| APP1
+    AS -->|Scale Replicas / Instances| APP2
+    AS -->|Scale Replicas / Instances| APPN
 ```
 
 The system is divided into five layers:
